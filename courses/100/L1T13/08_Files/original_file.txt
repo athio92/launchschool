@@ -1,0 +1,10 @@
+another example of writing to a file.
+Here we are with a new line of textWriting to files in Ruby is simple.
+another example of writing to a file.
+Here we are with a new line of textWriting to files in Ruby is simple.
+another example of writing to a file.
+Here we are with a new line of textWriting to files in Ruby is simple.
+another example of writing to a file.
+Here we are with a new line of textWriting to files in Ruby is simple.
+another example of writing to a file.
+Here we are with a new line of textWriting to files in Ruby is simple.
