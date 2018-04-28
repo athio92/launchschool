@@ -1,0 +1,9 @@
+# calculator_messages.yml
+
+welcome: "Welcome to the Ruby Calculator!"
+enter_x: "Enter first number"
+enter_y: "Enter second number"
+invalid_number: "That's not a valid number"
+invalid_option: "Please choose 1, 2, 3, or 4 only"
+retry: "Do you want to calculate again? (y to repeat)"
+thank_you: "Thank you for using calculator!"
