@@ -34,7 +34,7 @@ def resolve_player_choice(str)
     "scissors"
   when "lizard", "l"
     "lizard"
-  when "spock","sp"
+  when "spock", "sp"
     "spock"
   else
     "invalid choice"
