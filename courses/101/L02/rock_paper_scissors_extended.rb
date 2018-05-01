@@ -76,6 +76,19 @@ def display_result(winner)
   end
 end
 
+def match_ended?(player_score, computer_score)
+  if player_score == WIN_REQUIRED
+    prompt("Player has become grand champion!")
+    return true
+  end
+  if computer_score == WIN_REQUIRED
+    prompt("Computer has become grand champion!")
+    return true
+  end
+  false
+end
+
+
 ##### Main program flow #####
 system("clear") || system("cls") # clear terminal for less clutter
 player_choice = ''
@@ -91,16 +104,7 @@ loop do
   player_score += 1 if winner == "player"
   computer_score += 1 if winner == "computer"
   prompt("Player score: #{player_score}, Computer Score: #{computer_score}")
-
-  if player_score == WIN_REQUIRED
-    prompt("Player has become grand champion!")
-    break
-  end
-
-  if computer_score == WIN_REQUIRED
-    prompt("Computer has become grand champion!")
-    break
-  end
+  break if match_ended?(player_score, computer_score)
 end
 
 prompt("Thank you for playing! Player score: #{player_score}, Computer Score: #{computer_score}")
