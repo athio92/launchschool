@@ -24,8 +24,19 @@ def prompt(message)
   puts "=> #{message}"
 end
 
+def ask_player_choice
+  player_choice = ""
+  loop do
+    prompt("Choose one: rock (r), paper (p), scissors (sc), lizard (l), spock (sp)")
+    player_choice = resolve_player_choice(gets.chomp)
+    break if VALID_CHOICES.include?(player_choice)
+    prompt("Invalid choice, try again.")
+  end
+  player_choice
+end
+
 def resolve_player_choice(str)
-  case str
+  case str.downcase
   when "rock", "r"
     "rock"
   when "paper", "p"
@@ -43,16 +54,15 @@ end
 
 def evaluate_winner(player_choice, computer_choice)
   if player_choice == computer_choice
-    winner = "draw"
+    "draw"
   elsif WIN_HASHES[player_choice].include?(computer_choice)
-    winner = "player"
+    "player"
   # explicitly define losing condition to guard against possible bug
   elsif LOSE_HASHES[player_choice].include?(computer_choice)
-    winner = "computer"
+    "computer"
   else
     prompt("Error in determining result")
   end
-  winner
 end
 
 def display_result(winner)
@@ -67,18 +77,13 @@ def display_result(winner)
 end
 
 ##### Main program flow #####
+system("clear") || system("cls") # clear terminal for less clutter
 player_choice = ''
 player_score = 0
 computer_score = 0
 prompt("Welcome to RPSSL game! Win #{WIN_REQUIRED} matches to become grand champion!")
 loop do
-  loop do
-    prompt("Choose one: rock (r), paper (p), scissors (sc), lizard (l), spock (sp)")
-    player_choice = resolve_player_choice(gets.chomp)
-    break if VALID_CHOICES.include?(player_choice)
-    prompt("Invalid choice, try again.")
-  end
-
+  player_choice = ask_player_choice()
   computer_choice = VALID_CHOICES.sample
   prompt("Computer chose: #{computer_choice}")
   winner = evaluate_winner(player_choice, computer_choice)
