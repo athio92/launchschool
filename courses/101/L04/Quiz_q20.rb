@@ -8,9 +8,12 @@ mailing_campaign_leads = [
 # Legacy Code:
 ###############################################
 counter = 0
+
+# Capitalize all name in hash
 loop do
   break if counter == mailing_campaign_leads.size
-  # Get
+  # Get full name, split to [first, last], capitalize both first &last name, 
+  # joins back with space' ', and update name in hash
   full_name = mailing_campaign_leads[counter][:name]
   names = full_name.split
   names_counter = 0
@@ -28,6 +31,7 @@ loop do
   counter += 1
 end
 
+# Selects hashes where users' last login < 60 & mailing_list is true
 usable_leads = []
 counter = 0
 
