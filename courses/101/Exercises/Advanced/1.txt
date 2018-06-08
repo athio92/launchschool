@@ -1,0 +1,3 @@
+The %{adjective} %{noun} %{adverb}
+%{verb} the %{adjective} %{noun},
+who %{adverb} %{verb} %{adjective} %{noun}s

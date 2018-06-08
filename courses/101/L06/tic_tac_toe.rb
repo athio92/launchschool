@@ -1,10 +1,3 @@
-# 1. Display initial empty 3x3 board
-# 2. Ask user to mark a square
-# 3. Computer marks a square
-# 4. Any winner? If yes -> display winner -> ask if user wants to play again 
-#   -> stop if no, reset if yes
-# 5. If no winner, is board full? If yes, display tie -> ask if user wants to play again
-# 6. If no winner / no tie, repeat from step 2
 WINNING_PATTERNS = 
   [ 
     [1, 2, 3], [4, 5, 6], [7, 8, 9], 
@@ -23,7 +16,6 @@ def initialize_board
 end
 
 def display_board(brd)
-
   puts ""
   puts "     |     |     "
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}  "
@@ -36,14 +28,16 @@ def display_board(brd)
   puts "     |     |     "
   puts "  #{brd[7]}  |  #{brd[8]}  |  #{brd[9]}  "
   puts "     |     |     "
-
 end
 
 def player_places_piece(brd)
   loop do
     prompt "Choose a square (1-9):"
     square = gets.chomp.to_i
-    if brd[square] == " "
+    if !(1..9).include?(square)
+      puts "Invalid input"
+      next
+    elsif brd[square] == " "
       brd[square] = "X"
       break
     else
@@ -53,14 +47,14 @@ def player_places_piece(brd)
 end
 
 def computer_places_piece(brd)
-  computer_choice = (brd.select { |_, v| v == " "}).keys.sample
+  computer_choice = brd.select { |_, v| v == " " }.keys.sample
   p computer_choice
   brd[computer_choice] = "O"
 end
 
 def evaluate_winner(brd)
-  x_positions = (brd.select { |_, v| v == "X"} ).keys
-  o_positions = (brd.select { |_, v| v == "O"} ).keys
+  x_positions = brd.select { |_, v| v == "X" }.keys
+  o_positions = brd.select { |_, v| v == "O" }.keys
   WINNING_PATTERNS.each do |win_pattern|
     if (win_pattern & x_positions) == win_pattern
       return "Player" # Player wins
@@ -91,10 +85,11 @@ end
 
 # Main Program
 loop do
-  board = initialize_board # hash, like { 1 => "X", 2 => "O", 3 => " ", etc}
+  # returns hash w. keys 1-9, values = " ". { 1 => " ", ... , 9 => " "}
+  board = initialize_board
   winner = nil
   display_board(board)
-  
+
   until winner || board_full?(board)
     player_places_piece(board)
     computer_places_piece(board)
