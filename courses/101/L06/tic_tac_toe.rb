@@ -1,6 +1,6 @@
-WINNING_PATTERNS = 
-  [ 
-    [1, 2, 3], [4, 5, 6], [7, 8, 9], 
+WINNING_PATTERNS =
+  [
+    [1, 2, 3], [4, 5, 6], [7, 8, 9],
     [1, 4, 7], [2, 5, 8], [3, 6, 9],
     [1, 5, 9], [3, 5, 7]
   ]
@@ -34,7 +34,7 @@ def player_places_piece(brd)
   loop do
     prompt "Choose a square (1-9):"
     square = gets.chomp.to_i
-    if !(1..9).include?(square)
+    if !(1..9).cover?(square)
       puts "Invalid input"
       next
     elsif brd[square] == " "
