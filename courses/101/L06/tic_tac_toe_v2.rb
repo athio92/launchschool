@@ -13,6 +13,12 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+def joinor(arr, delimiter = ", ", last_separator = "or" )
+  return arr[0].to_s if arr.length <= 1
+  return "#{arr[0]} #{last_separator} #{arr[1]}" if arr.length == 2
+  "#{arr[0..arr.length - 2].join(delimiter)}#{delimiter}#{last_separator} #{arr.last}"
+end
+
 def initialize_board
   new_board = {}
   (1..9).each { |i| new_board[i] = INITIAL_MARKER }
@@ -21,7 +27,7 @@ end
 
 # rubocop: disable Metrics/AbcSize
 def display_board(brd)
-  system "clear"
+  # system "clear"
   puts ""
   puts "     |     |     "
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}  "
@@ -41,10 +47,23 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
+def find_at_risk_square(brd, marker)
+  # Loop through WINNING_LINES. For each line, count number of PLAYER_MARKER inside.
+  WINNING_LINES.each do |winning_line|
+    # If PLAYER_MARKER count == 2, and the remaining slot is empty, that is the at-risk square.
+    if brd.values_at(*winning_line).count(marker) == 2
+      winning_line.each do |square|
+        return square if brd[square] == INITIAL_MARKER
+      end
+    end
+  end
+  nil
+end
+
 def player_places_piece!(brd)
   square = ""
   loop do
-    prompt "Choose an empty square (#{empty_squares(brd).join(',')}):"
+    prompt "Choose an empty square: #{joinor(empty_squares(brd))}:"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that is not a valid choice"
@@ -53,7 +72,13 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = find_at_risk_square(brd, COMPUTER_MARKER)
+  if !square
+    square = find_at_risk_square(brd, PLAYER_MARKER)
+    if !square
+      square = empty_squares(brd).sample
+    end
+  end
   brd[square] = COMPUTER_MARKER
 end
 
@@ -74,26 +99,13 @@ def board_full?(brd)
   !brd.values.include?(INITIAL_MARKER)
 end
 
-def play_again?
-  loop do
-    prompt "Do you want to play again? (Y/N)"
-    answer = gets.chomp
-    if answer.match?(/y[es]*/i)
-      return true
-    elsif answer.match?(/n[o]*/i)
-      return false
-    else
-      prompt "Invalid answer. Please try again"
-    end
-  end
-end
-
 # Main Program
+player_score = 0
+computer_score = 0
 loop do
   # returns hash w. keys 1-9, values = " ". { 1 => " ", ... , 9 => " "}
   board = initialize_board
   winner = nil
-  display_board(board)
   loop do
     display_board(board)
     player_places_piece!(board)
@@ -106,13 +118,14 @@ loop do
   display_board(board)
 
   if winner
-    prompt "#{winner} wins!"
-    break unless play_again?
+    player_score += 1 if winner == "Player"
+    computer_score += 1 if winner == "Computer"
+    prompt "#{winner} wins! Player: #{player_score}, Computer: #{computer_score}"
+    break if player_score == 5 || computer_score == 5
   elsif board_full?(board)
     prompt "Board is full. It's a tie!"
-    break unless play_again?
   end
-  prompt "Let's play one more round!"
+  prompt "The game continues until 5 consecutive wins!"
 end
 
-prompt "Thank you for playing!"
+prompt "Game ends. Thank you for playing!"
