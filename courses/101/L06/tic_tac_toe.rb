@@ -76,7 +76,7 @@ end
 
 def play_again?
   loop do
-    prompt "Do you want to play again? (Y/N)"
+    prompt "Do you want to play again? (y/n)"
     answer = gets.chomp
     if answer.match?(/y[es]*/i)
       return true
