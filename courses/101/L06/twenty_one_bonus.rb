@@ -3,13 +3,12 @@ TARGET_SCORE = 5
 MAXIMUM_HAND_VALUE = 21
 MINIMUM_DEALER_HAND_VALUE = 17
 
-
 ### Utility methods ###
 def prompt(msg)
   puts "=> #{msg}"
 end
 
-def joinor(arr, delimiter = ", ", last_separator = "and" )
+def joinor(arr, delimiter = ", ", last_separator = "and")
   return arr[0].to_s if arr.length <= 1
   return "#{arr[0]} #{last_separator} #{arr[1]}" if arr.length == 2
   "#{arr[0..arr.length - 2].join(delimiter)}#{delimiter}#{last_separator} #{arr.last}"
@@ -20,14 +19,14 @@ def initialize_deck
   card_values = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
   [
     ["Hearts", card_values.dup.shuffle],
-    ["Diamonds",card_values.dup.shuffle],
-    ["Clubs",card_values.dup.shuffle],
-    ["Spades",card_values.dup.shuffle],
+    ["Diamonds", card_values.dup.shuffle],
+    ["Clubs", card_values.dup.shuffle],
+    ["Spades", card_values.dup.shuffle]
   ]
 end
 
 def pick_card_from_deck!(deck)
-  # future todo: if we allow multiple rounds without reinitializing deck,
+  # future todo: if we allow rounds without reinitializing deck,
   # we need to filter out suites with no leftover cards in it.
   suite_values_pair = deck.sample
   suite = suite_values_pair[0]
@@ -68,7 +67,7 @@ end
 
 def display_player_and_dealer_hands(player_hand, dealer_hand, hide_dealer_first_card = true)
   display_player_hand(player_hand)
-  display_dealer_hand(dealer_hand, hide_dealer_first_card)  
+  display_dealer_hand(dealer_hand, hide_dealer_first_card)
 end
 
 def display_player_hand(player_hand)
@@ -80,18 +79,18 @@ def display_dealer_hand(dealer_hand, hide_dealer_first_card = true)
   dealer_hand_values = filter_values_only(dealer_hand)
   if hide_dealer_first_card
     dealer_hand_values[0] = "unknown card"
-    prompt "Dealer have: #{joinor(dealer_hand_values)}." 
+    prompt "Dealer have: #{joinor(dealer_hand_values)}."
   else
     prompt "Dealer have: #{joinor(dealer_hand_values)}. Total value: #{count_hand_value(dealer_hand)}"
   end
 end
 
-def ask_player_to_hit_or_stay()
-  loop do 
+def ask_player_to_hit_or_stay
+  loop do
     prompt("Choose to Hit (h) or Stay (s)")
     user_input = gets.chomp
-    return :hit if user_input.match?(/h[it]*/i)
-    return :stay if user_input.match?(/s[tay]*/i)
+    return :hit if user_input.downcase == "h"
+    return :stay if user_input.downcase == "s"
     prompt("Invalid input")
   end
 end
@@ -101,7 +100,6 @@ def busted?(hand)
 end
 
 def detect_result(player_hand, dealer_hand)
-  # :tie, :dealer, :player, :dealer_busted, :player_busted
   player_hand_value = count_hand_value(player_hand)
   dealer_hand_value = count_hand_value(dealer_hand)
 
@@ -140,21 +138,6 @@ def display_end_of_game(player_hand, dealer_hand)
   puts "=============="
 end
 
-def play_again?
-  puts "--------------------"
-  loop do
-    prompt "Do you want to play again? (y/n)"
-    answer = gets.chomp
-    if answer.match?(/y[es]*/i)
-      return true
-    elsif answer.match?(/n[o]*/i)
-      return false
-    else
-      prompt "Invalid answer. Please try again"
-    end
-  end
-end
-
 def game_ends?(player_score, dealer_score)
   player_score >= TARGET_SCORE || dealer_score >= TARGET_SCORE
 end
@@ -164,14 +147,14 @@ def press_enter_to_continue
   _ = gets.chomp
 end
 
-
 ##### Main Game Flow #####
 player_score = 0
 dealer_score = 0
 loop do
   # Initialization
   system('clear')
-  prompt("Welcome to Twenty-One! Player score: #{player_score}, Dealer score: #{dealer_score}")
+  prompt("Welcome to #{MAXIMUM_HAND_VALUE} card game! Beat the Dealer #{TARGET_SCORE} times to win the game!")
+  puts("*****  Player score: #{player_score}, Dealer score: #{dealer_score}  *****")
   deck = initialize_deck
   player_hand = []
   dealer_hand = []
