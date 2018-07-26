@@ -1,0 +1,17 @@
+
+[1mFrom:[0m /home/athio92/Developer/launchschool/courses/109/throwaway2.rb @ line 15 Object#substring:
+
+    [1;34m14[0m: [32mdef[0m [1;34msubstring[0m(str,start_pos,end_pos)
+ => [1;34m15[0m:   binding.pry
+    [1;34m16[0m:   [32mif[0m end_pos > (str.length [1;34m-1[0m)
+    [1;34m17[0m:     binding.pry
+    [1;34m18[0m:     end_pos = (str.length - [1;34m1[0m)
+    [1;34m19[0m:     binding.pry
+    [1;34m20[0m: 
+    [1;34m21[0m:   [32mend[0m
+    [1;34m22[0m: 
+    [1;34m23[0m:   result_str = [31m[1;31m"[0m[31m[1;31m"[0m[31m[0m
+    [1;34m24[0m:   (start_pos..end_pos).each{|i| result_str << str[i]}
+    [1;34m25[0m:   result_str
+    [1;34m26[0m: [32mend[0m
+
