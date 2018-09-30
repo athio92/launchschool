@@ -1,0 +1,18 @@
+
+[1mFrom:[0m /home/athio92/Developer/launchschool/courses/120/Exercises/Debugging/07_bank_balance.rb @ line 23 BankAccount#withdraw:
+
+    [1;34m20[0m: [32mdef[0m [1;34mwithdraw[0m(amount)
+    [1;34m21[0m:   [32mif[0m amount > [1;34m0[0m
+    [1;34m22[0m:     success = ([1;36mself[0m.balance -= amount)
+ => [1;34m23[0m:     binding.pry
+    [1;34m24[0m:   [32melse[0m
+    [1;34m25[0m:     success = [1;36mfalse[0m
+    [1;34m26[0m:   [32mend[0m
+    [1;34m27[0m: 
+    [1;34m28[0m:   [32mif[0m success
+    [1;34m29[0m:     [31m[1;31m"[0m[31m$#{amount}[0m[31m withdrawn. Total balance is $#{balance}[0m[31m.[1;31m"[0m[31m[0m
+    [1;34m30[0m:   [32melse[0m
+    [1;34m31[0m:     [31m[1;31m"[0m[31mInvalid. Enter positive amount less than or equal to current balance ($#{balance}[0m[31m).[1;31m"[0m[31m[0m
+    [1;34m32[0m:   [32mend[0m
+    [1;34m33[0m: [32mend[0m
+
