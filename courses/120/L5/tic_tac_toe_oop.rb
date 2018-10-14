@@ -1,5 +1,4 @@
-require 'pry'
-module TTTGame_Utils
+module TTTGameUtils
   def prompt(msg)
     puts "=> #{msg}"
   end
@@ -12,7 +11,7 @@ module TTTGame_Utils
 end
 
 class TTTGame
-  include TTTGame_Utils
+  include TTTGameUtils
   TARGET_SCORE = 5
   WINNING_LINES =
   [
@@ -217,7 +216,7 @@ class Square
 end
 
 class Player
-  include TTTGame_Utils
+  include TTTGameUtils
   attr_reader :name, :marker
 
   def initialize(name, marker, is_computer = false)

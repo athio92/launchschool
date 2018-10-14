@@ -34,6 +34,8 @@ class Card
 
 end
 
+
+## Test cases commented out since package is used for next exercise ##
 # cards = [ Card.new(4, 'Hearts'),
 #           Card.new(4, 'Spades'),
 #           Card.new(5, 'Diamonds'),

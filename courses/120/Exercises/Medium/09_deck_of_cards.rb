@@ -23,6 +23,7 @@ class Deck
 
 end
 
+## Test cases commented out since package is used for next exercise ##
 # deck = Deck.new
 
 # drawn = []
